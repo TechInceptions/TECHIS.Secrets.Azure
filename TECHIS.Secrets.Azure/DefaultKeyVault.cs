@@ -14,12 +14,15 @@ namespace TECHIS.Secrets
         public string VaultUri { get; }
         public SecretClientOptions Options { get; }
 
+        public DefaultKeyVault(string vaultUri):this(vaultUri,null)
+        { 
+        }
         /// <summary>
         /// 
         /// </summary>
         /// <param name="vaultUri">You key vault uri like: https://<your-unique-key-vault-name>.vault.azure.net/</param>
         /// <exception cref="ArgumentException"></exception>
-        public DefaultKeyVault(string vaultUri)
+        public DefaultKeyVault(string vaultUri, TokenCredential? tokenCredential)
         {
             if (string.IsNullOrWhiteSpace(vaultUri))
             {
@@ -39,7 +42,7 @@ namespace TECHIS.Secrets
                  }
             };
 
-            _client = new SecretClient(new Uri(vaultUri), new DefaultAzureCredential(), Options);
+            _client = new SecretClient(new Uri(vaultUri), tokenCredential?? new DefaultAzureCredential(), Options);
         }
 
 
