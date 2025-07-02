@@ -17,6 +17,13 @@ namespace TECHIS.Secrets
         public DefaultKeyVault(string vaultUri):this(vaultUri,null)
         { 
         }
+
+        public DefaultKeyVault(string vaultUri, bool preferManagedIdentity) 
+            : this(vaultUri, 
+                  preferManagedIdentity? new DefaultAzureCredential(new DefaultAzureCredentialOptions { ExcludeWorkloadIdentityCredential=true, ExcludeEnvironmentCredential=true }) : null)
+        {
+        }
+
         /// <summary>
         /// 
         /// </summary>
